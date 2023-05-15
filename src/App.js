@@ -5,7 +5,7 @@ import Products from './components/ItemList/Products';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import Notification from './components/UI/Notification';
-import { fetchCartData, postCartData } from './redux/action/cartCation';
+import { fetchCartData, postCartData } from './redux/thunk/cartCation';
 
 const ItemArea = styled.div`
   display: flex;
@@ -23,8 +23,6 @@ function App() {
   const cart = useSelector(state => state.cartReducer);
   const notification = useSelector(state => state.uiReducer.notification);
 
-  console.log(cart)
-
   useEffect(() => {
     dispatch(fetchCartData());
   }, [dispatch]);
@@ -36,7 +34,9 @@ function App() {
       isInitial = false;
       return;
     }
-    dispatch(postCartData(cart))
+    if (cart.changed) {
+      dispatch(postCartData(cart));
+    }
   }, [cart, dispatch]);
 
   return (
