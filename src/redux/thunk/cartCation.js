@@ -6,11 +6,14 @@ import { replaceCart } from "../slice/cartSlice";
 export const fetchCartData = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch(
+      const res = await axios.get(
         `https://redux-http-97631-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json`
       );
-      const data = await res.json();
-      dispatch(replaceCart(data));
+      const data = res.data;
+      dispatch(replaceCart({
+        items: data.items || [],
+        totalCount: data.totalCount
+      }));
     } catch (error) {
       dispatch(
         showNotification({
@@ -23,7 +26,7 @@ export const fetchCartData = () => {
   };
 };
 
-export const postCartData = (cart) => {
+export const putCartData = (cart) => {
   return async (dispatch) => {
     dispatch(showNotification({
       status: 'pending',

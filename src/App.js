@@ -5,7 +5,7 @@ import Products from './components/ItemList/Products';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import Notification from './components/UI/Notification';
-import { fetchCartData, postCartData } from './redux/thunk/cartCation';
+import { fetchCartData, putCartData } from './redux/thunk/cartCation';
 
 const ItemArea = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ function App() {
       return;
     }
     if (cart.changed) {
-      dispatch(postCartData(cart));
+      dispatch(putCartData(cart));
     }
   }, [cart, dispatch]);
 
