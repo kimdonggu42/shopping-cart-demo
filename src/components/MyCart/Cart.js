@@ -25,6 +25,7 @@ const CartWrapper = styled.ul`
 
 function Cart() {
   const cartItems = useSelector(state => state.cartReducer.items);
+  console.log(cartItems)
 
   return (
     <CartContainer>
